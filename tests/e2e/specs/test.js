@@ -8,5 +8,7 @@ describe("Note taking app", () => {
 
     cy.get(".notes").should("have.length", 1);
     cy.get(".timestamps").should("have.length", 1);
+    cy.get(".notes").eq(0).should("contain", "Sample Note");
+    cy.get(".note-count").should("contain", "Note count: 1");
   });
 });

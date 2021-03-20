@@ -1,44 +1,51 @@
 <template>
-  <div class="notes-section">
-    <div class="columns">
-      <div class="column has-text-centered">
-        <strong>Notes</strong>
-        <div v-for="(note, index) in notes" :key="index" class="notes">
-          {{ note }}
+  <div>
+    <div class="notes-section">
+      <div class="columns">
+        <div class="column has-text-centered">
+          <strong>Notes</strong>
+          <div v-for="(note, index) in notes" :key="index" class="notes">
+            {{ note }}
+          </div>
+        </div>
+        <div class="column has-text-centered">
+          <strong>Timestamp</strong>
+          <div
+            v-for="(timestamp, index) in timestamps"
+            :key="index"
+            class="timestamps"
+          >
+            {{ timestamp }}
+          </div>
         </div>
       </div>
-      <div class="column has-text-centered">
-        <strong>Timestamp</strong>
-        <div
-          v-for="(timestamp, index) in timestamps"
-          :key="index"
-          class="timestamps"
-        >
-          {{ timestamp }}
-        </div>
-      </div>
+      <InputComponent :placeholder="placeholder" />
     </div>
-    <InputComponent @add-note="addNote" :placeholder="placeholder" />
+    <NoteCountComponent />
   </div>
 </template>
 
 <script>
 import InputComponent from "./components/InputComponent";
+import NoteCountComponent from "./components/NoteCountComponent";
 export default {
   name: "App",
   data() {
     return {
-      notes: [],
-      timestamps: [],
       placeholder: "Enter a note",
     };
   },
-  components: { InputComponent },
-  methods: {
-    addNote(event) {
-      this.notes.push(event.note);
-      this.timestamps.push(event.timestamp);
+  computed: {
+    notes() {
+      return this.$store.getters.getNotes;
     },
+    timestamps() {
+      return this.$store.getters.getTimestamps;
+    },
+  },
+  components: {
+    InputComponent,
+    NoteCountComponent,
   },
 };
 </script>

@@ -22,10 +22,8 @@ export default {
   },
   methods: {
     monitorEnterKey() {
-      this.$emit("add-note", {
-        note: this.input,
-        timestamp: new Date().toLocaleString(),
-      });
+      this.$store.dispatch("addNote", this.input);
+      this.$store.dispatch("addTimestamp", new Date().toLocaleString());
       this.input = "";
     },
   },
